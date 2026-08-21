@@ -1,0 +1,78 @@
+<UserControl x:Class="Eggcellent.Views.LargeFilesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
+    <Grid Margin="28">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,16">
+            <TextBlock Text="Large Files" Style="{StaticResource SectionTitle}"/>
+            <TextBlock Text="Find the biggest files in a folder and clear out what you don't need." Style="{StaticResource SectionSubtitle}"/>
+        </StackPanel>
+
+        <Border Grid.Row="1" Style="{StaticResource CardBorder}" Margin="0,0,0,16">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Text="{Binding SelectedFolder}" IsReadOnly="True" mah:TextBoxHelper.Watermark="Folder to scan" VerticalContentAlignment="Center" Margin="0,0,10,0"/>
+                    <Button Grid.Column="1" Content="Browse..." Command="{Binding BrowseCommand}" Style="{StaticResource PrimaryActionButton}"/>
+                </Grid>
+                <Grid Margin="0,14,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Minimum size (MB):" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="{StaticResource EggcellentTextMuted}"/>
+                    <mah:NumericUpDown Grid.Column="1" Value="{Binding MinSizeMb}" Minimum="1" Interval="10"/>
+                    <mah:ProgressRing Grid.Column="2" IsActive="{Binding IsBusy}" Width="22" Height="22" HorizontalAlignment="Right" Margin="0,0,14,0" Foreground="{DynamicResource MahApps.Brushes.Accent}"/>
+                    <Button Grid.Column="3" Content="Scan" Command="{Binding ScanCommand}" Style="{StaticResource PrimaryActionButton}"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="2" Style="{StaticResource CardBorder}" Padding="0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Results}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="{StaticResource EggcellentBorder}" BorderThickness="0,0,0,1" Padding="14,10">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Grid.Column="0" IsChecked="{Binding IsSelected}" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="{StaticResource EggcellentTextPrimary}"/>
+                                        <TextBlock Text="{Binding FullPath}" FontSize="11" Foreground="{StaticResource EggcellentTextMuted}" TextTrimming="CharacterEllipsis"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="2" Text="{Binding SizeDisplay}" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="{DynamicResource MahApps.Brushes.Accent}"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+        <Grid Grid.Row="3" Margin="0,14,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="{Binding Status}" VerticalAlignment="Center" Foreground="{StaticResource EggcellentTextMuted}"/>
+            <Button Grid.Column="1" Content="Delete Selected" Command="{Binding DeleteSelectedCommand}" Style="{StaticResource DangerActionButton}"/>
+        </Grid>
+    </Grid>
+</UserControl>
