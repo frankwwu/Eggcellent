@@ -8,7 +8,7 @@ using Microsoft.Win32;
 
 namespace Eggcellent.ViewModels
 {
-    public class ShredderViewModel : ViewModelBase
+    public class DeepDeleteViewModel : ViewModelBase
     {
         public ObservableCollection<FileItem> Files { get; } = new();
 
@@ -41,7 +41,7 @@ namespace Eggcellent.ViewModels
         public RelayCommand RemoveCommand { get; }
         public RelayCommand ShredCommand { get; }
 
-        public ShredderViewModel()
+        public DeepDeleteViewModel()
         {
             AddFilesCommand = new RelayCommand(AddFiles);
             RemoveCommand = new RelayCommand(p => { if (p is FileItem f) Files.Remove(f); });
@@ -52,7 +52,7 @@ namespace Eggcellent.ViewModels
         {
             var dialog = new OpenFileDialog
             {
-                Title = "Choose files to shred",
+                Title = "Choose files to deep delete",
                 Multiselect = true,
                 CheckFileExists = true
             };
@@ -78,11 +78,11 @@ namespace Eggcellent.ViewModels
             var result = MessageBox.Show(
                 $"This will permanently and securely delete {Files.Count} file(s) using {Passes} overwrite pass(es). " +
                 "This cannot be undone. Continue?",
-                "Confirm Shred", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                "Confirm Deep Delete", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (result != MessageBoxResult.Yes) return;
 
             IsBusy = true;
-            Status = "Shredding files...";
+            Status = "Deep deleting files...";
 
             var toShred = Files.ToList();
             int success = 0, failed = 0;
@@ -91,14 +91,14 @@ namespace Eggcellent.ViewModels
             {
                 foreach (var file in toShred)
                 {
-                    if (ShredderService.Shred(file.FullPath, Passes))
+                    if (DeepDeleteService.Shred(file.FullPath, Passes))
                         Application.Current.Dispatcher.Invoke(() => { Files.Remove(file); success++; });
                     else
                         failed++;
                 }
             });
 
-            Status = $"Shredded {success} file(s)." + (failed > 0 ? $" {failed} could not be shredded (in use or access denied)." : "");
+            Status = $"Deep deleted {success} file(s)." + (failed > 0 ? $" {failed} could not be shredded (in use or access denied)." : "");
             (ShredCommand as RelayCommand)?.RaiseCanExecuteChanged();
             IsBusy = false;
         }

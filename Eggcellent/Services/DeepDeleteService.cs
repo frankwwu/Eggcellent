@@ -3,13 +3,13 @@ using System.Security.Cryptography;
 
 namespace Eggcellent.Services
 {
-    public static class ShredderService
+    public static class DeepDeleteService
     {
         /// <summary>
         /// Overwrites a file's contents with random data for the given number of passes,
         /// renames it to obscure the original name, then deletes it. Not a guarantee against
         /// forensic recovery on all storage types (notably SSDs with wear-leveling), but it
-        /// matches standard "shred" behavior for secure file deletion.
+        /// matches standard "deep delete" behavior for secure file deletion.
         /// </summary>
         public static bool Shred(string filePath, int passes)
         {

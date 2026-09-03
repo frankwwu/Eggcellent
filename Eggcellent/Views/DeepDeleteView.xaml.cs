@@ -2,9 +2,9 @@ using System.Windows.Controls;
 
 namespace Eggcellent.Views
 {
-    public partial class ShredderView : UserControl
+    public partial class DeepDeleteView : UserControl
     {
-        public ShredderView()
+        public DeepDeleteView()
         {
             InitializeComponent();
         }
