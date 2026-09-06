@@ -1,0 +1,79 @@
+<UserControl x:Class="Eggcellent.Views.ToolboxView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
+    <UserControl.Resources>
+        <Style x:Key="ToolTile" TargetType="Border" BasedOn="{StaticResource CardBorder}">
+            <Setter Property="Width" Value="230"/>
+            <Setter Property="Margin" Value="0,0,16,16"/>
+        </Style>
+    </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="28">
+        <StackPanel MaxWidth="900" HorizontalAlignment="Left">
+            <TextBlock Text="Toolbox" Style="{StaticResource SectionTitle}"/>
+            <TextBlock Text="Quick, safe one-click utilities." Style="{StaticResource SectionSubtitle}"/>
+
+            <WrapPanel Margin="0,20,0,0">
+                <Border Style="{StaticResource ToolTile}">
+                    <StackPanel>
+                        <iconPacks:PackIconMaterial Kind="Web" Width="24" Height="24" Foreground="{DynamicResource MahApps.Brushes.Accent}"/>
+                        <TextBlock Text="Flush DNS Cache" FontWeight="SemiBold" Margin="0,10,0,4" Foreground="{StaticResource EggcellentTextPrimary}"/>
+                        <TextBlock Text="Clears cached DNS lookups — useful when sites won't load correctly." FontSize="11" Foreground="{StaticResource EggcellentTextMuted}" TextWrapping="Wrap" Height="46"/>
+                        <Button Content="Flush Now" Command="{Binding FlushDnsCommand}" Style="{StaticResource PrimaryActionButton}" Margin="0,10,0,0" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource ToolTile}">
+                    <StackPanel>
+                        <iconPacks:PackIconMaterial Kind="Memory" Width="24" Height="24" Foreground="{DynamicResource MahApps.Brushes.Accent}"/>
+                        <TextBlock Text="Free Up Memory" FontWeight="SemiBold" Margin="0,10,0,4" Foreground="{StaticResource EggcellentTextPrimary}"/>
+                        <TextBlock Text="Asks running apps to release idle memory back to Windows." FontSize="11" Foreground="{StaticResource EggcellentTextMuted}" TextWrapping="Wrap" Height="46"/>
+                        <Button Content="Free Memory" Command="{Binding FreeMemoryCommand}" Style="{StaticResource PrimaryActionButton}" Margin="0,10,0,0" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource ToolTile}">
+                    <StackPanel>
+                        <iconPacks:PackIconMaterial Kind="Delete" Width="24" Height="24" Foreground="{DynamicResource MahApps.Brushes.Accent}"/>
+                        <TextBlock Text="Empty Recycle Bin" FontWeight="SemiBold" Margin="0,10,0,4" Foreground="{StaticResource EggcellentTextPrimary}"/>
+                        <TextBlock Text="Permanently deletes everything currently in the Recycle Bin." FontSize="11" Foreground="{StaticResource EggcellentTextMuted}" TextWrapping="Wrap" Height="46"/>
+                        <Button Content="Empty Now" Command="{Binding EmptyRecycleBinCommand}" Style="{StaticResource PrimaryActionButton}" Margin="0,10,0,0" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource ToolTile}">
+                    <StackPanel>
+                        <iconPacks:PackIconMaterial Kind="ShieldOutline" Width="24" Height="24" Foreground="{DynamicResource MahApps.Brushes.Accent}"/>
+                        <TextBlock Text="System Protection" FontWeight="SemiBold" Margin="0,10,0,4" Foreground="{StaticResource EggcellentTextPrimary}"/>
+                        <TextBlock Text="Opens Windows' built-in restore point settings, so you can create one before making changes." FontSize="11" Foreground="{StaticResource EggcellentTextMuted}" TextWrapping="Wrap" Height="46"/>
+                        <Button Content="Open" Command="{Binding OpenSystemProtectionCommand}" Style="{StaticResource PrimaryActionButton}" Margin="0,10,0,0" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource ToolTile}">
+                    <StackPanel>
+                        <iconPacks:PackIconMaterial Kind="Broom" Width="24" Height="24" Foreground="{DynamicResource MahApps.Brushes.Accent}"/>
+                        <TextBlock Text="Windows Disk Cleanup" FontWeight="SemiBold" Margin="0,10,0,4" Foreground="{StaticResource EggcellentTextPrimary}"/>
+                        <TextBlock Text="Opens the built-in Disk Cleanup tool for system files Eggcellent doesn't touch." FontSize="11" Foreground="{StaticResource EggcellentTextMuted}" TextWrapping="Wrap" Height="46"/>
+                        <Button Content="Open" Command="{Binding OpenDiskCleanupCommand}" Style="{StaticResource PrimaryActionButton}" Margin="0,10,0,0" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource ToolTile}">
+                    <StackPanel>
+                        <iconPacks:PackIconMaterial Kind="ChartBar" Width="24" Height="24" Foreground="{DynamicResource MahApps.Brushes.Accent}"/>
+                        <TextBlock Text="Task Manager" FontWeight="SemiBold" Margin="0,10,0,4" Foreground="{StaticResource EggcellentTextPrimary}"/>
+                        <TextBlock Text="Opens Task Manager to check what's using CPU, memory, or startup resources." FontSize="11" Foreground="{StaticResource EggcellentTextMuted}" TextWrapping="Wrap" Height="46"/>
+                        <Button Content="Open" Command="{Binding OpenTaskManagerCommand}" Style="{StaticResource PrimaryActionButton}" Margin="0,10,0,0" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Border>
+            </WrapPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                <mah:ProgressRing IsActive="{Binding IsBusy}" Width="20" Height="20" Margin="0,0,10,0" Foreground="{DynamicResource MahApps.Brushes.Accent}"/>
+                <TextBlock Text="{Binding Status}" VerticalAlignment="Center" Foreground="{StaticResource EggcellentTextMuted}"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
