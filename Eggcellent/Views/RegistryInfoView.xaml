@@ -1,0 +1,41 @@
+<UserControl x:Class="Eggcellent.Views.RegistryInfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="28">
+        <StackPanel MaxWidth="720" HorizontalAlignment="Left">
+            <TextBlock Text="Registry" Style="{StaticResource SectionTitle}"/>
+            <TextBlock Text="Why Eggcellent doesn't clean the registry for you." Style="{StaticResource SectionSubtitle}"/>
+
+            <Border Style="{StaticResource CardBorder}" Margin="0,20,0,0">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                        <iconPacks:PackIconMaterial Kind="InformationOutline" Width="22" Height="22" Foreground="{DynamicResource MahApps.Brushes.Accent}" VerticalAlignment="Center"/>
+                        <TextBlock Text="A note on registry cleaning" FontWeight="SemiBold" FontSize="15" Margin="10,0,0,0" VerticalAlignment="Center" Foreground="{StaticResource EggcellentTextPrimary}"/>
+                    </StackPanel>
+
+                    <TextBlock TextWrapping="Wrap" Foreground="{StaticResource EggcellentTextMuted}" LineHeight="22">
+                        Many cleaner apps offer to automatically scan and "fix" the Windows registry.
+                        Eggcellent intentionally doesn't do this. The registry has no reliable way to tell
+                        an unused entry from one an app still depends on, so automated registry cleaners
+                        routinely delete things that turn out to matter — and the disk space or performance
+                        gain from a clean registry is negligible on modern Windows. The realistic risk of
+                        breaking something outweighs the benefit.
+                    </TextBlock>
+
+                    <TextBlock TextWrapping="Wrap" Foreground="{StaticResource EggcellentTextMuted}" LineHeight="22" Margin="0,14,0,0">
+                        If you still want to review or edit the registry yourself, you can open the built-in
+                        Registry Editor below. Go slowly, only change keys you're confident about, and back up
+                        first — in Registry Editor, right-click "Computer" at the top of the tree and choose
+                        <Run FontStyle="Italic">Export</Run> to save a .reg file you can restore from if something goes wrong.
+                    </TextBlock>
+
+                    <Button Content="Open Registry Editor" Command="{Binding OpenRegistryEditorCommand}"
+                            Style="{StaticResource PrimaryActionButton}" HorizontalAlignment="Left" Margin="0,18,0,0"/>
+
+                    <TextBlock Text="{Binding Status}" Margin="0,12,0,0" Foreground="{StaticResource EggcellentTextMuted}" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
