@@ -1,0 +1,128 @@
+<mah:MetroWindow x:Class="Eggcellent.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:vm="clr-namespace:Eggcellent.ViewModels"
+        xmlns:views="clr-namespace:Eggcellent.Views"
+        Title="Eggcellent" MinHeight="600" MinWidth="880"
+        Icon="Eggcellent.ico"
+        BorderThickness="1" GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
+        WindowState="{Binding WindowState, Mode=TwoWay}"                 
+        Left="{Binding Left, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        Top="{Binding Top, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                 
+        Width="{Binding Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                 
+        Height="{Binding Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                                  
+        TitleCharacterCasing="Normal">
+
+    <mah:MetroWindow.DataContext>
+        <vm:MainViewModel/>
+    </mah:MetroWindow.DataContext>
+
+    <mah:MetroWindow.Resources>
+        <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+            <views:DashboardView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CleanerViewModel}">
+            <views:CleanerView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:DiskAnalyzerViewModel}">
+            <views:DiskAnalyzerView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:LargeFilesViewModel}">
+            <views:LargeFilesView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:DuplicatesViewModel}">
+            <views:DuplicatesView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:UninstallerViewModel}">
+            <views:UninstallerView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:DeepDeleteViewModel}">
+            <views:DeepDeleteView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:StartupViewModel}">
+            <views:StartupView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:MemoryMapViewModel}">
+            <views:MemoryMapView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ToolboxViewModel}">
+            <views:ToolboxView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:RegistryInfoViewModel}">
+            <views:RegistryInfoView/>
+        </DataTemplate>
+        <Rectangle x:Key="AccentMenuIcon" Width="16" Height="16" x:Shared="False" Fill="{Binding ColorBrush, Mode=OneWay}" />
+
+        <Style x:Key="AccentColorMenuItemStyle" BasedOn="{StaticResource MahApps.Styles.MenuItem}" TargetType="{x:Type MenuItem}">
+            <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
+            <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
+            <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
+        </Style>
+    </mah:MetroWindow.Resources>
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands >
+            <Menu>
+                <MenuItem Header="Color" ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}" 
+                           ItemsSource="{Binding AccentColors, Mode=OneWay}" />
+            </Menu>
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+
+    <Grid Background="{StaticResource EggcellentBackground}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Nav rail -->
+        <Border Grid.Column="0" Background="{StaticResource EggcellentNavBackground}">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top" Margin="22,26,22,30">
+                    <TextBlock Text="Eggcellent" FontSize="22" FontWeight="Bold" Foreground="White"/>
+                    <TextBlock Text="System Cleaner" FontSize="11" Foreground="#8A93A6" Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <ListBox ItemsSource="{Binding NavItems}" SelectedItem="{Binding SelectedNavItem}"
+                         Background="Transparent" BorderThickness="0" Margin="10,0">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Padding" Value="12,10"/>
+                            <Setter Property="Margin" Value="0,2"/>
+                            <Setter Property="Foreground" Value="#C6CBD8"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Border x:Name="ItemBorder" Background="Transparent" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="ItemBorder" Property="Background" Value="#2A3040"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="ItemBorder" Property="Background" Value="#242A38"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconMaterial Kind="{Binding Icon}" Width="18" Height="18" Foreground="#C6CBD8" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Name}" Foreground="#E4E7EC" Margin="12,0,0,0" VerticalAlignment="Center" FontSize="13.5"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </Border>
+
+        <!-- Content -->
+        <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}"/>
+    </Grid>
+</mah:MetroWindow>
