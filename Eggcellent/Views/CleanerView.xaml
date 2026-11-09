@@ -21,19 +21,29 @@
                 <ItemsControl ItemsSource="{Binding Categories}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border BorderBrush="{StaticResource EggcellentBorder}" BorderThickness="0,0,0,1" Padding="14,12">
+                            <Border BorderBrush="{StaticResource EggcellentBorder}" BorderThickness="0" Padding="4,4">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <CheckBox Grid.Column="0" IsChecked="{Binding IsSelected}" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                    <CheckBox Grid.Column="0" IsChecked="{Binding IsSelected}" VerticalAlignment="Top" Margin="0"/>
                                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="{StaticResource EggcellentTextPrimary}"/>
-                                        <TextBlock Text="{Binding Description}" FontSize="11" Foreground="{StaticResource EggcellentTextMuted}"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBox Text="{Binding Name, Mode=OneWay}" FontWeight="SemiBold" Foreground="{StaticResource EggcellentTextPrimary}" IsReadOnly="True" BorderThickness="0" Padding="0" Margin="0"/>
+                                            <TextBox Text="{Binding Description, Mode=OneWay}" Foreground="{StaticResource EggcellentTextMuted}" IsReadOnly="True" BorderThickness="0" Padding="0" Margin="0"/>
+                                        </StackPanel>
+                                        <ItemsControl ItemsSource="{Binding Paths}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBox Text="{Binding ., Mode=OneWay}" FontFamily="Consolas" FontSize="11" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0"
+                                                             Foreground="{StaticResource EggcellentTextMuted}" Padding="0" Margin="0"/>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
                                     </StackPanel>
-                                    <TextBlock Grid.Column="2" Text="{Binding SizeDisplay}" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="{DynamicResource MahApps.Brushes.Accent}"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding SizeDisplay}" VerticalAlignment="Top" FontWeight="SemiBold" Foreground="{DynamicResource MahApps.Brushes.Accent}"/>
                                 </Grid>
                             </Border>
                         </DataTemplate>
